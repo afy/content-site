@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>content_site</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nancy" Version="2.0.0" />
+    <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="XCOPY &quot;$(ProjectDir)src\views\&quot; &quot;$(TargetDir)views\&quot; /S /C /Y" />
+  </Target>
+
+</Project>
