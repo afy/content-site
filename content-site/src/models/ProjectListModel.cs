@@ -5,14 +5,14 @@ using content_site.src.backend;
 
 namespace content_site.src.models
 {
-    public class ProjectListModel
+    public class PageListModel
     {
-        public List<Project> projects { get; }
         public string uri = "";
+        public List<Page> pages;
         
-        public ProjectListModel(List<Project> l) {
-            projects = l;
+        public PageListModel(List<Page> p) {
             uri = Program.getUri();
+            pages = p;
         }
     }
 }

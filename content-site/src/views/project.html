@@ -1,0 +1,11 @@
+﻿@Master['pagelayout.html']
+
+@Section['Content']
+    -- project @Model.name -- <br>
+    [@Model.posted]<br>
+
+    -- data -- <br>
+    @Each.data
+        @Current.Key : @Current.Value <br>
+    @EndEach
+@EndSection

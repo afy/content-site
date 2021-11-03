@@ -1,11 +1,13 @@
 ﻿using System;
 using Nancy.Hosting.Self;
+using content_site.src.backend;
 
 namespace content_site
 {
-    class Program
+    public class Program
     {
         private static Uri uri;
+        public static ContentTracker contentTracker = new ContentTracker();
 
         static void Main(string[] args)
         {

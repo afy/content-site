@@ -11,12 +11,11 @@ namespace content_site
     {
         public MainModule()
         {
-            var projectTracker = new ProjectTracker();
 
             // main page; serve as "preview" or some sort of menu.
             Get("/", _ => {
                 var model = new MainModel();
-                return View["views/pages/main/main.html", model];
+                return View["views/main.html", model];
             });
 
             // about page; quick info.
@@ -25,23 +24,32 @@ namespace content_site
             });
 
             // a list-style page of posts, update, git commits, and stuff like that.
-            Get("/posts", _ => {
-                return "test - all posts tab";
+            Get("/post", _ => {
+                var model = new PageListModel(Program.contentTracker.getPosts());
+                return View["views/postlist.html", model];
+            });
+
+            Get("/post/{name}", param => {
+                Page p = Program.contentTracker.getPostByName(param.name);
+                if (p == null) {
+                    return "error page - no post of that name exists";
+                }
+                return View[p.view, p];
             });
 
             // a list-style page of all projects, active listed on top.
-            Get("/projects", _ => {
-                var model = new ProjectListModel(projectTracker.getAllProjects());
-                return View["views/pages/projects/main.html", model];
+            Get("/project", _ => {
+                var model = new PageListModel(Program.contentTracker.getProjects());
+                return View["views/projectlist.html", model];
             });
-
+            
             // detalied info on a specific project.
-            Get("/projects/{name}/", param => {
-                var p = projectTracker.getProjectFromName(param.name);
+            Get("/project/{name}/", param => {
+                Page p = Program.contentTracker.getProjectByName(param.name);
                 if (p == null) {
-                    return "test - no project with this name exists. (queried name="+param.name+")"; 
+                    return "error page - no project of that name exists";
                 }
-                return View[p.view];
+                return View[p.view, p];       
             });
         }
     }

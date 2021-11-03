@@ -1,0 +1,7 @@
+﻿@Master['pagelayout.html']
+
+@Section['Content']
+    @Each.pages
+        <a href="@Model.uri/project/@Current.name">@Current.name</a><br>
+    @EndEach
+@EndSection
