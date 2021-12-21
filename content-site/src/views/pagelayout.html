@@ -19,14 +19,18 @@
     }
 
     .content-body {
+        padding:2%;
         background-color: #f0f7ee;
         display: table-cell;
     }
 
     .header {
-        padding: 15px;
+        padding: 1%;
         background-color: #776871;
-        display: table-row;
+    }
+
+    .link {
+        color: black;
     }
 </style>
 
@@ -34,13 +38,15 @@
 <body>
 <div class="container">
     <header class="header">
-        <a href="../">H  </a>
-        <a href="../post">P1  </a>
-        <a href="../project">P2  </a>
+        <font size="5">
+        <a class="link" href="../">Home</a> &nbsp&nbsp&nbsp
+        <a class="link" href="../post">Posts</a> &nbsp&nbsp&nbsp
+        <a class="link" href="../project">Projects</a>
+        </font>
     </header>
     <section class="content">
         <div class="content-body">
-            <p>@Section['Content']</p>
+            @Section['Content']
         </div>
     </section>
 </div>

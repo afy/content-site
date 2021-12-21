@@ -11,7 +11,6 @@ namespace content_site
     {
         public MainModule()
         {
-
             // main page; serve as "preview" or some sort of menu.
             Get("/", _ => {
                 var model = new MainModel();

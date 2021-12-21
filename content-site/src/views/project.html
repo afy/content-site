@@ -1,11 +1,48 @@
 ﻿@Master['pagelayout.html']
 
 @Section['Content']
-    -- project @Model.name -- <br>
-    [@Model.posted]<br>
 
-    -- data -- <br>
-    @Each.data
-        @Current.Key : @Current.Value <br>
+
+<div style="display: flex; justify-content: space-between">
+    <div>
+        <font size="6">@Model.name</font><br>
+        <font size="4">@Model.posted </font> <br>
+         <p>@Model.text</p>
+    </div>
+
+
+    <div style="width: 30%; background-color: darkred; padding:1%">
+        @If.projectData.githubLoaded
+        -- github -- <br>
+        <a class="link" href="@Model.projectData.githubSrc">@Model.projectData.githubSrc</a> <br><br>
+
+        -- latest commit -- <br>
+        <a href="@Model.projectData.latestCommit.link">@Model.projectData.latestCommit.time</a> <br><br>
+
+        -- all commits -- <br>
+        @Each.projectData.commits
+            <a href="@Current.link">@Current.time</a> <br>
+        @EndEach
+
+        @EndIf
+
+        @IfNot.projectData.githubLoaded
+            GitHub tracking is not working at the moment: @Model.projectData.gitFailedReason
+        @EndIf
+    </div>
+</div>
+
+
+
+
+<div style="width: 100%; bottom: 0%; background-color: slategrey; margin-top: 2%; padding:1%">
+    -- gallery --
+    @Each.projectData.gallery
+    @Current <br>
     @EndEach
+</div>
+
+
+
+
 @EndSection

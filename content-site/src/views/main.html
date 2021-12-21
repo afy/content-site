@@ -1,16 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@Master['pagelayout.html']
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Main</title>
-</head>
-<body>
-    <a href="@Model.uri/project/">xd</a> <a href="@Model.uri/post">xd2</a><br> 
-    ------------ Latest<br>
-    @Each.latestPages
-        [@Current.posted] [@Current.type] <a href="@Model.uri/@Current.type/@Current.name">@Current.name</a> <br>
-    @EndEach
-    ------------
-</body>
-</html>
+@Section['Content']
+
+-- latest -- <br>
+@Each.latestPages
+[@Current.posted] [@Current.type] <a href="@Model.uri/@Current.type/@Current.name">@Current.name</a> <br>
+@EndEach
+
+@EndSection
