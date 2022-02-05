@@ -1,14 +1,20 @@
 ﻿using System;
+using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Nancy.Hosting.Kestrel;
+using Nancy.Conventions;
 using content_site.src.backend;
 
 namespace content_site
 {
     internal class Startup {
-        public void Configure(IApplicationBuilder app) => app.UseNancy();
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseStaticFiles();
+            app.UseNancy();
+        }
     }
 
     public class Program
@@ -30,6 +36,7 @@ namespace content_site
             });
 
             var host = webBuilder
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseKestrel()
                 .UseStartup<Startup>()
                 .Build();
@@ -38,7 +45,7 @@ namespace content_site
         }
 
         // I am way too tired for whatever fucking nonsense is going on
-        // WILL be fixed at some point in the future maybe
+        // WILL be fixed at some point in the future (maybe)
         public static string getUri() {
             return "http://localhost:8999";
         }

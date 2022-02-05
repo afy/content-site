@@ -4,8 +4,13 @@ using System.Text;
 
 namespace content_site.src.backend
 {
+    public class Update {
+        public DateTime posted { get; set; }
+        public string title { get; set; }
+        public string text { get; set; }
+    }
+
     public class ProjectData {
-        public List<string> gallery { get; set; }
         public string githubSrc { get; set; }
 
         // set after load
@@ -19,9 +24,11 @@ namespace content_site.src.backend
         public string name { get; set; }
         public string type { get; set; }
         public string view { get; set; }
-        public string text { get; set; }
+        public string info { get; set; } // header value; old .text for posts
+        public string banner { get; set; }
         public DateTime posted { get; set; }
-        public Dictionary<string, string> data { get; set; }
+        public List<Update> updates { get; set; }
+        public List<string> gallery { get; set; }
         public ProjectData projectData { get; set; } // optional; set only for projects
     }
 }

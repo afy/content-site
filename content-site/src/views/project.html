@@ -2,47 +2,85 @@
 
 @Section['Content']
 
+<style>
+    .pageHeader {
+        width: 100%;
+        top: 0%;
+        margin-bottom: 2%;
+    }
+    .gallery {
+        width: 100%;
+        bottom: 0%;
+        background-color: #171612;
+        margin-top: 2%;
+        padding: 1%
+    }
 
-<div style="display: flex; justify-content: space-between">
-    <div>
-        <font size="6">@Model.name</font><br>
-        <font size="4">@Model.posted </font> <br>
-         <p>@Model.text</p>
-    </div>
+    .main {
+        flex: 70%;
+    }
+    .gitTab {
+        background-color: #6b241c;
+        border-style: ridge;
+        border-color: #b4b5c2; 
+        flex: 30%;
+        padding: 1%;
+        height: 40%;
+    }
+    .halign {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+</style>
 
 
-    <div style="width: 30%; background-color: darkred; padding:1%">
-        @If.projectData.githubLoaded
-        -- github -- <br>
-        <a class="link" href="@Model.projectData.githubSrc">@Model.projectData.githubSrc</a> <br><br>
-
-        -- latest commit -- <br>
-        <a href="@Model.projectData.latestCommit.link">@Model.projectData.latestCommit.time</a> <br><br>
-
-        -- all commits -- <br>
-        @Each.projectData.commits
-            <a href="@Current.link">@Current.time</a> <br>
-        @EndEach
-
-        @EndIf
-
-        @IfNot.projectData.githubLoaded
-            GitHub tracking is not working at the moment: @Model.projectData.gitFailedReason
-        @EndIf
-    </div>
+<div class="pageHeader">
+    <font size="6" class="title">@Model.name   </font><br>
+    <font size="4" class="extra">@Model.posted </font> <br>
+    <p class="text">@Model.info</p>
+    <hr class="hr">
 </div>
 
+<div class="halign">
+    <div class="main">
+        @Each.updates
+        <font size="5" class="title">@Current.title</font><br>
+        <font size="4" class="extra">@Current.posted</font><br>
+        <p class="text">@Current.text</p>
+        <hr class="hr">
+        @EndEach
+    </div>
 
+<div class="gitTab">
+    @If.projectData.githubLoaded
+    -- github -- <br>
+    <a class="link" href="@Model.projectData.githubSrc">@Model.projectData.githubSrc</a> <br><br>
 
+    -- latest commit -- <br>
+    <a class="link" href="@Model.projectData.latestCommit.link">@Model.projectData.latestCommit.time</a> <br><br>
 
-<div style="width: 100%; bottom: 0%; background-color: slategrey; margin-top: 2%; padding:1%">
-    -- gallery --
-    @Each.projectData.gallery
-    @Current <br>
+    -- all commits -- <br>
+    @Each.projectData.commits
+    <a class="link" href="@Current.link">@Current.time</a> <br>
+    @EndEach
+
+    @EndIf
+
+    @IfNot.projectData.githubLoaded
+    <p class="text">GitHub tracking is not working at the moment: @Model.projectData.gitFailedReason</p>
+    @EndIf
+</div>
+</div>  
+
+<div class="gallery">
+    @Each.gallery
+    <img src="@Current" width="30%" height="20%">
     @EndEach
 </div>
-
-
-
 
 @EndSection

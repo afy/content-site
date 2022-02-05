@@ -15,19 +15,18 @@ namespace content_site.src.backend
         
         private List<Page> pages;
         public string jsonLoc = "data/pages.json";
-        public bool githubTrackerEnabled = true;
+        public bool githubTrackerEnabled = false;
         public GitHubClient gitHubClient;
         
         public ContentTracker() {
             gitHubClient = new GitHubClient(new ProductHeaderValue("content-site"));
 
-            saveRandomPages();
+            savePages();
             var jsonData = JsonSerializer.Deserialize<PageListJson>(File.ReadAllText(jsonLoc));
             pages = jsonData.pages;
 
             if (githubTrackerEnabled)
             {
-                // today is just not my day
                 /*var apiInfo = gitHubClient.GetLastApiInfo().RateLimit;
                 Console.WriteLine("GitHub tracking enabled \nLimit: " + apiInfo.Limit.ToString() + "\nRemaining: " +
                     apiInfo.Remaining.ToString() + "\nReset: " + apiInfo.Reset.ToString());*/
@@ -47,7 +46,7 @@ namespace content_site.src.backend
                         {
                             p.projectData.commits.Add(c);
                         }
-
+                        
                         p.projectData.latestCommit = p.projectData.commits[0];
                     }
                     else
@@ -100,7 +99,7 @@ namespace content_site.src.backend
         public List<Page> getProjects() {
             return pages.FindAll(delegate(Page p) { return p.type == "project"; });
         }
-
+        
         public Page getProjectByName(string name) {
             return pages.Find(delegate(Page p) { return p.type == "project" && p.name == name;});
         }
@@ -108,7 +107,7 @@ namespace content_site.src.backend
         public List<Page> getPosts() {
             return pages.FindAll(delegate (Page p) { return p.type == "post"; });
         }
-
+        
         public Page getPostByName(string name) {
             return pages.Find(delegate (Page p) { return p.type == "post" && p.name == name; });
         }
@@ -120,58 +119,33 @@ namespace content_site.src.backend
         // debug function / test page layout
         // ideally pages shouldn't be written on load (obviously)
         // but it isn't vitally important to fix right away 
-        public void saveRandomPages(){
+        public void savePages(){
             List<Page> pl = new List<Page>();
-
-            string[] types = new string[] { "project", "post" };
-            Random rnd = new Random();
-
-            int pi = 0;
-            int bi = 0;
-            
-            for (int i = 0; i < 10; i++) {
-                int r = rnd.Next(0, 2);
-                string t = types[r];
-                var _d = new Dictionary<string, string>() { { "index", i.ToString() } };
-                Page p = new Page {
-                    type = t,
-                    view = "views/" + t + ".html",
-                    posted = DateTime.Now,
-                    data = _d
-                };
-
-
-                string x;
-                if (r == 0) { // project
-                    pi += 1;
-                    x = pi.ToString();
-                    p.text = "test project number " + x;
-                    p.projectData = new ProjectData() { gallery = new List<string>() {} };
-                }
-                else if (r == 1) { // post
-                    bi += 1;
-                    x = bi.ToString();
-                    p.text = "test project number " + x;
-                }
-                else {
-                    Console.WriteLine("fix ur code dumbass");
-                    x = "";
-                }
-                
-                p.name = "test-" + t + "-" + x;
-                pl.Add(p);
-            }
-
             pl.Add(new Page() {
                 name = "content-site",
                 type = "project",
                 view = "views/project.html",
-                text = "A simple project for tracking/displaying projects and updates",
-                posted = DateTime.Now,
-                projectData = new ProjectData() {
-                    gallery = new List<string>() { "i1.png", "i2.png" },
+                info = "A simple project for tracking/displaying projects and updates",
+                banner = "~/images/i1.png",
+                posted = new DateTime(2021, 10, 26),
+                gallery = new List<string>() { "~/images/i1.png", "~/images/i2.png" },
+                updates = new List<Update>() {
+                    new Update() {
+                        title = "New parameters",
+                        posted = new DateTime(2022, 2, 5, 16, 37, 00),
+                        text = "Added various data to projects to in an effort to style the site a bit. Also added the ability to update the project (though they dont show up in latest list just yet). Beyond simple backend additions I also want to start migrating old/local projects both to the site and to my github, as well as make the github tracking for the site a bit more robust. I also want to touch on some parts of the site (more commit info in tracker, gallery viewer, etc.)"
+                    }
+                },
+                projectData = new ProjectData() {   
                     githubSrc = "content-site"
                 }
+            });
+            pl.Add(new Page() {
+                name = "Styling the website",
+                type = "post",
+                view = "views/post.html",
+                info = "Staring at autogenerated palettes and standard fonts is getting to me, so I have started tidying up the site and doing some basic styling to make it look a bit better. It's not perfect yet (not even close) but it's nice to see some progress given that this project has taken the backseat for a while now. More to come soon.",
+                posted = new DateTime(2022, 2, 5, 16, 40, 00)
             });
 
             var options = new JsonSerializerOptions() {

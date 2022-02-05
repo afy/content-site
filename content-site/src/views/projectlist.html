@@ -1,7 +1,11 @@
 ﻿@Master['pagelayout.html']
 
 @Section['Content']
-    @Each.pages
-        <a href="@Model.uri/project/@Current.name">@Current.name</a><br>
-    @EndEach
+<font size="5" class="title">Projects</font> <br>
+@Each.pages
+<font size="4" class="extra">[@Current.posted] [@Current.type] </font>
+<a href="@Model.uri/project/@Current.name">
+    <font size="4" class="text">@Current.name</font>
+</a> <br>
+@EndEach
 @EndSection

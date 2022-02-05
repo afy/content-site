@@ -2,9 +2,12 @@
 
 @Section['Content']
 
--- latest -- <br>
+<font class="title" size="5">Latest</font> <br>
 @Each.latestPages
-[@Current.posted] [@Current.type] <a href="@Model.uri/@Current.type/@Current.name">@Current.name</a> <br>
+<font size="4" class="extra">[@Current.posted] [@Current.type] </font>
+<a href="@Model.uri/@Current.type/@Current.name">
+    <font size="4" class="text">@Current.name</font>
+</a> <br>
 @EndEach
 
 @EndSection
