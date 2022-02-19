@@ -4,10 +4,21 @@
 
 <font class="title" size="5">Latest</font> <br>
 @Each.latestPages
+
+@If.isRedirect
 <font size="4" class="extra">[@Current.posted] [@Current.type] </font>
-<a href="@Model.uri/@Current.type/@Current.name">
+<a href="/@Current.info">
     <font size="4" class="text">@Current.name</font>
 </a> <br>
+@EndIf
+
+@IfNot.isRedirect
+<font size="4" class="extra">[@Current.posted] [@Current.type] </font>
+<a href="/@Current.type/@Current.name">
+    <font size="4" class="text">@Current.name</font>
+</a> <br>
+@EndIf
+
 @EndEach
 
 @EndSection

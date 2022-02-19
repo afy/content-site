@@ -11,7 +11,6 @@ namespace content_site.src.models
         public List<Page> pages;
         
         public PageListModel(List<Page> p) {
-            uri = Program.getUri();
             pages = p;
         }
     }

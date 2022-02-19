@@ -11,7 +11,6 @@ namespace content_site.src.models
         public List<Page> latestPages;
 
         public MainModel() {
-            uri = Program.getUri();
             latestPages = Program.contentTracker.getLatestPages(10);
         } 
     }

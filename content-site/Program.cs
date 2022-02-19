@@ -20,12 +20,16 @@ namespace content_site
     public class Program
     {
         public static ContentTracker contentTracker;
-        
+        public static string uri;
+
         static void Main(string[] args)
         {
             string addr = "127.0.0.1";
             int port = 8999;
             contentTracker = new ContentTracker();
+            Console.WriteLine("gitTracker reload repos: "+contentTracker.gitTracker.reloadRepos.ToString());
+            Console.WriteLine("gitTracker update on load: "+contentTracker.gitTracker.saveJsonOnload.ToString());
+            Console.WriteLine("using pages.json from: "+contentTracker.jsonLoc);
 
             WebHostBuilder webBuilder = new WebHostBuilder();
             webBuilder.ConfigureKestrel(serverOptions => {
@@ -42,12 +46,6 @@ namespace content_site
                 .Build();
 
             host.Run();
-        }
-
-        // I am way too tired for whatever fucking nonsense is going on
-        // WILL be fixed at some point in the future (maybe)
-        public static string getUri() {
-            return "http://localhost:8999";
         }
     }
 }

@@ -58,15 +58,15 @@
 
 <div class="gitTab">
     @If.projectData.githubLoaded
-    -- github -- <br>
-    <a class="link" href="@Model.projectData.githubSrc">@Model.projectData.githubSrc</a> <br><br>
+    <font class="text" size="4">Github link</font><br>
+    <a class="text" href="@Model.projectData.githubSrc">@Model.projectData.githubSrc</a> <br><br>
 
-    -- latest commit -- <br>
-    <a class="link" href="@Model.projectData.latestCommit.link">@Model.projectData.latestCommit.time</a> <br><br>
+    <font class="text" size="4">Latest commit</font><br>
+    <a class="text" href="@Model.projectData.latestCommit.link">@Model.projectData.latestCommit.time</a> <br><br>
 
-    -- all commits -- <br>
+    <font class="text" size="4">All commits</font><br>
     @Each.projectData.commits
-    <a class="link" href="@Current.link">@Current.time</a> <br>
+    <a class="text" href="@Current.link">@Current.time</a> <br>
     @EndEach
 
     @EndIf
