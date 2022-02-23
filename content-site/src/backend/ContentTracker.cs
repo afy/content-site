@@ -24,7 +24,7 @@ namespace content_site.src.backend
             pages = jsonData.pages;
             gitTracker.loadRepos(pages);
         }
-
+        
         public void saveJson() {
             var options = new JsonSerializerOptions()
             {

@@ -36,6 +36,55 @@
         box-sizing: border-box;
     }
 
+   #galleryview {
+        position:absolute;
+        top: 0%;
+        left: 0%;
+        height: 90%;
+        width: 90%;
+        margin:5%;
+        background-color: rgba(0,0,0,0);
+        z-index:1000;
+        display: none;
+    }
+
+    .galleryEl {
+        width:30%; 
+        height:20%;
+        transition: transform .2s;
+    }
+
+    .galleryEl:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+        cursor: pointer;
+    }
+
+    .closeButton {
+        width: 5%;
+        height: 5%;
+        right: 0%;
+    }
+
+    .closeButton:hover {
+        cursor: pointer;
+    }
+
+    #commitview {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 70%;
+        width: 40%;
+        margin-top: 15%;
+        margin-left: 30%;
+        background-color: #6b241c;
+        border-style: ridge;
+        border-color: #b4b5c2;
+        padding: 1%;
+        z-index: 999;
+        display: none;
+    }
 </style>
 
 
@@ -66,7 +115,10 @@
 
     <font class="text" size="4">All commits</font><br>
     @Each.projectData.commits
-    <a class="text" href="@Current.link">@Current.time</a> <br>
+    <a class="text" href="@Current.link" 
+       onmouseover="showCommitInfo('Author: @Current.author', '@Current.time', '@Current.message');"
+       onmouseout="document.getElementById('commitview').style.display = 'none';"
+       >@Current.time</a> <br>
     @EndEach
 
     @EndIf
@@ -77,10 +129,42 @@
 </div>
 </div>  
 
+<script>
+    function setImg(s) {
+        var el = document.getElementById("gvimg");
+        el.src = s.src;
+        document.getElementById("galleryview").style.display = "block";
+    }
+
+    function showCommitInfo(auth, date, msg) {
+        document.getElementById("commitview").style.display = 'block';
+        document.getElementById("commitauth").innerHTML = auth;
+        document.getElementById("commitdate").innerHTML = date;
+        document.getElementById("commitmsg").innerHTML = msg;
+    }
+</script>
+
 <div class="gallery">
     @Each.gallery
-    <img src="@Current" width="30%" height="20%">
+    <img src="@Current" class="galleryEl" onclick="setImg(this);">
     @EndEach
+</div>
+
+<div id="commitview">
+    <font size="4" class="text" id="commitauth"></font><br>
+    <font size="4" class="text" id="commitdate"></font><br>
+    <p class="text" id="commitmsg"></p>
+</div>
+
+<div id="galleryview">
+    <div>
+        <img src="~/images/i1.png" class="closeButton"
+             onclick="document.getElementById('galleryview').style.display = 'none';">
+    </div>
+    
+    <div style="width: 100%; height: 100%; justify-content: center;">
+        <img id="gvimg" style="max-width:100%; max-height:100%">
+    </div>
 </div>
 
 @EndSection
